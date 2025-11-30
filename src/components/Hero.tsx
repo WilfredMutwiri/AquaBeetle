@@ -1,24 +1,49 @@
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Droplets } from "lucide-react";
-import heroImage from "@/assets/hero-aquabeetle.jpg";
+
+import hero1 from "@/assets/hero-aquabeetle.jpg";
+import hero2 from "@/assets/hero2.png"
+import hero3 from "@/assets/hero3.png";
+import hero4 from "@/assets/hero4.png";
+import hero5 from "@/assets/hero5.jpg";
+
+const images = [hero1,hero2,hero3,hero4,hero5];
 
 const Hero = () => {
+  const [index, setIndex] = useState(0);
+
+  // Auto slide every 5s
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image with Parallax Effect */}
-      <motion.div
-        className="absolute inset-0 z-0"
-        initial={{ scale: 1.1 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-      >
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background" />
-      </motion.div>
+
+      {/* Background Carousel */}
+      <div className="absolute inset-0 z-0">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={index}
+            className="absolute inset-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2 }}
+          >
+            <div
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: `url(${images[index]})` }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background" />
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
       {/* Floating Droplet Decorations */}
       <div className="absolute inset-0 z-10 overflow-hidden pointer-events-none">

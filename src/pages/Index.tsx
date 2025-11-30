@@ -9,13 +9,14 @@ import MissionVision from "@/components/MissionVision";
 import Team from "@/components/Team";
 import Funding from "@/components/Funding";
 import Contact from "@/components/Contact";
-
+import HowItWorks from "@/components/howItWorks"
 const Index = () => {
   return (
     <div className="min-h-screen">
       <Hero />
       <Problem />
       <Solution />
+      <HowItWorks/>
       <ValueProposition />
       <MarketOpportunity />
       <BusinessModel />
